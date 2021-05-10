@@ -1,7 +1,9 @@
 #include<gtk/gtk.h>
 #include<stdio.h>
 #include<stdlib.h>
-#include <pthread.h>
+#include<pthread.h>
+
+#include<pokergame.h>
 
 
 GtkWidget *g_lbl_titulo;
@@ -93,9 +95,7 @@ int main(int argc, char *argv[])
 
     g_object_unref(builder);
 
-    gtk_widget_show(window);   
-                 
-    //delay(1000);
+    gtk_widget_show(window);
                  
     gtk_main();
 
@@ -128,6 +128,14 @@ void on_btn_calcular_clicked(GtkButton *b)
 	pthread_t t_cargandopts;
 	pthread_create(&t_cargandopts, NULL,&cargandopts,NULL);
 	
+
+	//Aqui se hace la simulacion
+	game();
+
+	//Aqui se llaman todas las funciones de probabilidad
+
+
+	//Mostrar informacion al usuario
 	ent_M_text = gtk_entry_get_text (GTK_ENTRY (g_ent_M)); //obtiene un string con un numero de la interfaz
 	ent_N_text = gtk_entry_get_text (GTK_ENTRY (g_ent_N));
 	

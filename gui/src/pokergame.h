@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<time.h> 
 #include<string.h>
-#include <math.h>
+#include<math.h>
 #include<unistd.h>
 
 #define HAND_SIZE 5       
@@ -10,6 +10,8 @@
 #define FIRSTCARD 0       
 #define CLASS 8           
 #define RANKS 13
+
+//Definir las probabilidades teoricas
 
 typedef struct card{
   int suit;
@@ -64,6 +66,9 @@ void player_destroy(Player * aPlayer);
 // Prototipos para: Probability
 double mediaEmpirica(double probabilidades[], int size);
 double varianciaEmpirica(double probabilidades[], int size, double media);
+
+// Prototipo para: Pokergame
+int game();
 
 
 

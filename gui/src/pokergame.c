@@ -1,6 +1,6 @@
 #include "pokergame.h"
 
-int main(int argc, char **argv){
+int game(){
   int i=0;
   int setloop=1;
 
@@ -33,6 +33,8 @@ int main(int argc, char **argv){
     // Esta es la parte que se ocupa editar para barajar por parametro
     // Actualmente lo hace en todas las corridas
     enqueue_deck(playingDeck);
+
+    // Aqui se indica cada cuanto se baraja
     shuffle(playingDeck,1500);
     player_reset_hand(player);
 

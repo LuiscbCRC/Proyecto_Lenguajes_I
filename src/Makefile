@@ -1,6 +1,8 @@
 pokergame: pokergame.o card.o deck.o hand.o player.o probability.o pokergame.h
 	gcc -o pokergame pokergame.o probability.o card.o deck.o hand.o player.o
 
+# Aqui iria la compilacion del gui
+
 pokergame.o: pokergame.c card.o deck.o hand.o player.o pokergame.h
 	gcc -c pokergame.c -I.
 
