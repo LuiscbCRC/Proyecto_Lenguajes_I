@@ -1,7 +1,4 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include <math.h>
-
+#include "pokergame.h"
 
 double mediaEmpirica(double probabilidades[], int size){
     double suma=0;
@@ -26,4 +23,3 @@ double varianciaEmpirica(double probabilidades[], int size, double media){
     
     return suma/size;
 }
-
