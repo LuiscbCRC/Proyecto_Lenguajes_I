@@ -69,7 +69,6 @@ de manos de poker.</property>
               <object class="GtkEntry" id="ent_M">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <signal name="changed" handler="on_ent_M_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -91,7 +90,6 @@ de manos de poker.</property>
               <object class="GtkEntry" id="ent_N">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <signal name="changed" handler="on_ent_N_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>

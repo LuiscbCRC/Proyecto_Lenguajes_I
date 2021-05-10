@@ -11,6 +11,12 @@ GtkWidget *g_lbl_cargandopts;
 GtkWidget *g_lbl_teorico;
 GtkWidget *g_lbl_estadistico;
 
+GtkWidget *g_ent_entM;
+GtkWidget *g_ent_entN;
+
+
+#define NPUNTOS 5
+
 
 int main(int argc, char *argv[])
 {
@@ -29,10 +35,12 @@ int main(int argc, char *argv[])
     g_lbl_M = 			GTK_WIDGET(gtk_builder_get_object(builder, "lbl_M"));
     g_lbl_N = 			GTK_WIDGET(gtk_builder_get_object(builder, "lbl_N"));
     g_lbl_cargando = 	GTK_WIDGET(gtk_builder_get_object(builder, "lbl_cargando"));
-    g_lbl_cargandopts = 	GTK_WIDGET(gtk_builder_get_object(builder, "lbl_cargandopts"));
+    g_lbl_cargandopts = GTK_WIDGET(gtk_builder_get_object(builder, "lbl_cargandopts"));
     g_lbl_teorico = 	GTK_WIDGET(gtk_builder_get_object(builder, "lbl_teorico"));
-    g_lbl_estadistico = GTK_WIDGET(gtk_builder_get_object(builder, "lbl_estadistico"));
-
+    g_lbl_estadistico =	GTK_WIDGET(gtk_builder_get_object(builder, "lbl_estadistico"));
+    
+    g_ent_entM = 		GTK_WIDGET(gtk_builder_get_object(builder, "ent_entM"));
+    g_ent_entN = 		GTK_WIDGET(gtk_builder_get_object(builder, "ent_entN"));
 
     g_object_unref(builder);
 
@@ -59,25 +67,35 @@ char *repeatStr (char *str, size_t count) {
 
 void cargandopts()
 {
-	for(int i = 1; i <= 11; i++)//cambiar a un while true cuando se esté cargando el proceso general y que el acabe este hilo cuando termine
+	for(int i = 1; i <= 10 * NPUNTOS; i++)//cambiar a un while true cuando se esté cargando el proceso general y que el acabe este hilo cuando termine
 	{	
-		gtk_label_set_text(GTK_LABEL(g_lbl_cargandopts),(repeatStr(".",i % 4)));
-		usleep(100000);
+		gtk_label_set_text(GTK_LABEL(g_lbl_cargandopts),(repeatStr(".",i % NPUNTOS)));
+		usleep(500000);
 	}
 }
 
-void on_btn_calcular_clicked(ent_M,ent_N)
+void on_btn_calcular_clicked(GtkButton *b)
 {
 	pthread_t t_cargandopts;
 	pthread_create(&t_cargandopts, NULL,cargandopts,NULL);
 	
+	//const char *nombre;
+	//nombre = gtk_entry_get_text (e);
+	gtk_label_set_text (GTK_LABEL(g_lbl_teorico),gtk_entry_get_text (g_ent_entM));
+	
+	
+	
+	//gtk_editable_delete_text (GTK_EDITABLE(g_ent_entM), 0, -1);
+	
 }
 
-//void on_ent_M_changed(GtkEntry *e)
-//{
-//	char tmp[128];
+/*void on_ent_M_changed(GtkEntry *e)
+{
+	char tmp[32];
+	sprintf(tmp, "%s", gtk_entry_get_text(e));
+	gtk_label_set_text(GTK_LABEL(g_lbl_teorico),(const gchar* ) tmp);
 	
-//}
+}*/
 
 
 // called when window is closed
