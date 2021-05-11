@@ -1,4 +1,4 @@
-#include "pokergame.h"
+#include"pokergame.h"
 
 double mediaEmpirica(double probabilidades[], int size){
     double suma=0;

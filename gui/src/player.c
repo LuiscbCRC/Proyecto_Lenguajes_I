@@ -1,4 +1,4 @@
-#include "pokergame.h"
+#include"pokergame.h"
 
 int player_init(Player * aPlayer){
   if((aPlayer->hand = (Hand *)malloc(sizeof(Hand)))==NULL)

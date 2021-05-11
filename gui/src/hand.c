@@ -1,4 +1,4 @@
-#include "pokergame.h"
+#include"pokergame.h"
 
 //Aqui van todos los tipos de jugadas que se pueden hacer
 enum {HIGHCARD,PAIR,TWOPAIR,THREEK,STRAIGHT,FLUSH,FULLHOUSE,FOURK,SFLUSH} classes;

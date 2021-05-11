@@ -68,7 +68,7 @@ double mediaEmpirica(double probabilidades[], int size);
 double varianciaEmpirica(double probabilidades[], int size, double media);
 
 // Prototipo para: Pokergame
-int game();
+int * game(int M, int N);
 
 
 
