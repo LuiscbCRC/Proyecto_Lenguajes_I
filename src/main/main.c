@@ -83,12 +83,12 @@ char *repeatStr (char *str, size_t count) {
     return ret;
 }
 
-void *cargandopts(void *)
+static void *cargandopts(void *arg)
 {
 	for(int i = 1; i <= 10 * NPUNTOS; i++)//cambiar a un while true cuando se esté cargando el proceso general y que el acabe este hilo cuando termine
 	{	
 		gtk_label_set_text(GTK_LABEL(g_lbl_cargandopts),(repeatStr(".",i % NPUNTOS)));
-		usleep(500000);
+		sleep(1);
 	}
 }
 
@@ -100,16 +100,16 @@ void on_btn_calcular_clicked(GtkButton *b)
 	//Obtener valores del usuario
 	ent_M_text = gtk_entry_get_text (GTK_ENTRY (g_ent_M));
 	ent_N_text = gtk_entry_get_text (GTK_ENTRY (g_ent_N));
-	int M_num = atoi(ent_M_text);
+	const int M_num = atoi(ent_M_text);
 	int N_num = atoi(ent_N_text);
 	
-	static int listProbabilityDoublePar[M_num];
-	static int listProbabilityFullHouse[M_num];
-	static int listProbabilityPoker[M_num];
-	static int listProbabilityRealStraight[M_num];
+	static double listProbabilityDoublePar[500000];
+	static double listProbabilityFullHouse[500000];
+	static double listProbabilityPoker[500000];
+	static double listProbabilityRealStraight[500000];
 
 	//Aqui se hace la simulacion
-	for(simulations = 0; simulations < M_num; simulations++){
+	for(int simulations = 0; simulations < M_num; simulations++){
 		cantidadJuegos = game(N_num);
 		listProbabilityDoublePar[simulations] = getProbability(*(cantidadJuegos +0) , N_num);
 		listProbabilityFullHouse[simulations] = getProbability(*(cantidadJuegos +1) , N_num);
@@ -118,26 +118,26 @@ void on_btn_calcular_clicked(GtkButton *b)
 	}
 
 	printf("Lista de probabilidades para Doble Par: [");
-	for(simulations = 0; simulations < M_num; simulations++){
-		printf (" %d ", *(listProbabilityDoublePar +simulations));
+	for(int simulations = 0; simulations < M_num; simulations++){
+		printf (" %f ", *(listProbabilityDoublePar +simulations));
 	}
 	printf("]\n");
 
 	printf("Lista de probabilidades para Full House: [");
-	for(simulations = 0; simulations < M_num; simulations++){
-		printf (" %d ", *(listProbabilityFullHouse +simulations));
+	for(int simulations = 0; simulations < M_num; simulations++){
+		printf (" %f ", *(listProbabilityFullHouse +simulations));
 	}
 	printf("]\n");
 
 	printf("Lista de probabilidades para Poker: [");
-	for(simulations = 0; simulations < M_num; simulations++){
-		printf (" %d ", *(listProbabilityPoker +simulations));
+	for(int simulations = 0; simulations < M_num; simulations++){
+		printf (" %f ", *(listProbabilityPoker +simulations));
 	}
 	printf("]\n");
 
 	printf("Lista de probabilidades para Escalera Real: [");
-	for(simulations = 0; simulations < M_num; simulations++){
-		printf (" %d ", *(listProbabilityRealStraight +simulations));
+	for(int simulations = 0; simulations < M_num; simulations++){
+		printf (" %f ", *(listProbabilityRealStraight +simulations));
 	}
 	printf("]\n");
 	
