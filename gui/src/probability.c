@@ -18,7 +18,7 @@ double varianciaEmpirica(double probabilidades[], int size, double media){
 
     for (int i = 0; i < size; i++)
     {
-        suma+= pow(probabilidades[i]-media,2.0);
+       // suma+= pow(probabilidades[i]-media,2.0);
     }
     
     return suma/size;

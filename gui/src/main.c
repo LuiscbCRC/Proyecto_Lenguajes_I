@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 
     gtk_init(&argc, &argv);
 
-    builder = gtk_builder_new_from_file("glade/window_main.glade");
+    builder = gtk_builder_new_from_file("../glade/window_main.glade");
 
     window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
     gtk_builder_connect_signals(builder, NULL);
