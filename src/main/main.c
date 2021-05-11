@@ -17,6 +17,7 @@ const gchar *ent_N_text;
 
 int main(int argc, char *argv[])
 {
+	int simulations = 0;
     GtkBuilder      *builder; 
     GtkWidget       *window;
 
@@ -95,27 +96,50 @@ void on_btn_calcular_clicked(GtkButton *b)
 {
 	pthread_t t_cargandopts;
 	pthread_create(&t_cargandopts, NULL,cargandopts,NULL);
-	
 
-
-
-	//Aqui se llaman todas las funciones de probabilidad
-
-
-	//Mostrar informacion al usuario
+	//Obtener valores del usuario
 	ent_M_text = gtk_entry_get_text (GTK_ENTRY (g_ent_M));
 	ent_N_text = gtk_entry_get_text (GTK_ENTRY (g_ent_N));
+	int M_num = atoi(ent_M_text);
+	int N_num = atoi(ent_N_text);
 	
+	static int listProbabilityDoublePar[M_num];
+	static int listProbabilityFullHouse[M_num];
+	static int listProbabilityPoker[M_num];
+	static int listProbabilityRealStraight[M_num];
+
 	//Aqui se hace la simulacion
-	cantidadJuegos = game(atoi(ent_M_text),atoi(ent_N_text));
+	for(simulations = 0; simulations < M_num; simulations++){
+		cantidadJuegos = game(N_num);
+		listProbabilityDoublePar[simulations] = getProbability(*(cantidadJuegos +0) , N_num);
+		listProbabilityFullHouse[simulations] = getProbability(*(cantidadJuegos +1) , N_num);
+		listProbabilityPoker[simulations] = getProbability(*(cantidadJuegos +2) , N_num);
+		listProbabilityRealStraight[simulations] = getProbability(*(cantidadJuegos +3) , N_num);
+	}
 
-	g_print ("ent_M_text contents: %s\n", ent_M_text);
-	g_print ("ent_N_text contents: %s\n", ent_N_text);
+	printf("Lista de probabilidades para Doble Par: [");
+	for(simulations = 0; simulations < M_num; simulations++){
+		printf (" %d ", *(listProbabilityDoublePar +simulations));
+	}
+	printf("]\n");
 
-	printf ("Cantidad de doble par: %d\n", *(cantidadJuegos +0));
-	printf ("Cantidad de full house: %d\n",*(cantidadJuegos +1)) ;
-	printf ("Cantidad de poker: %d\n",*(cantidadJuegos +2));
-	printf ("Cantidad de escalera real: %d\n", *(cantidadJuegos +3));
+	printf("Lista de probabilidades para Full House: [");
+	for(simulations = 0; simulations < M_num; simulations++){
+		printf (" %d ", *(listProbabilityFullHouse +simulations));
+	}
+	printf("]\n");
+
+	printf("Lista de probabilidades para Poker: [");
+	for(simulations = 0; simulations < M_num; simulations++){
+		printf (" %d ", *(listProbabilityPoker +simulations));
+	}
+	printf("]\n");
+
+	printf("Lista de probabilidades para Escalera Real: [");
+	for(simulations = 0; simulations < M_num; simulations++){
+		printf (" %d ", *(listProbabilityRealStraight +simulations));
+	}
+	printf("]\n");
 	
 	gtk_label_set_text(GTK_LABEL(g_lbl_dp_vt),ent_M_text);
 	gtk_label_set_text(GTK_LABEL(g_lbl_dp_m),ent_N_text);

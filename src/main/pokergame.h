@@ -66,9 +66,10 @@ void player_destroy(Player * aPlayer);
 // Prototipos para: Probability
 double mediaEmpirica(double probabilidades[], int size);
 double varianciaEmpirica(double probabilidades[], int size, double media);
+double getProbability(int qty, int tries);
 
 // Prototipo para: Pokergame
-int * game(int M, int N);
+int * game(int N);
 
 
 

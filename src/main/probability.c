@@ -1,5 +1,11 @@
 #include"pokergame.h"
 
+double getProbability(int qty, int tries){
+    double value = 0;
+    value = qty/tries*100
+    return value;
+}
+
 double mediaEmpirica(double probabilidades[], int size){
     double suma=0;
 
