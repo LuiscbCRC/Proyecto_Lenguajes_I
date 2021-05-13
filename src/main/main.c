@@ -15,8 +15,29 @@ int * cantidadJuegos;
 const gchar *ent_M_text;
 const gchar *ent_N_text;
 
+const gchar *doblePar_text1;
+const gchar *doblePar_text2;
+const gchar *doblePar_text3;
+const gchar *doblePar_text4;
+
+const gchar *fullHouse_text1;
+const gchar *fullHouse_text2;
+const gchar *fullHouse_text3;
+const gchar *fullHouse_text4;
+
+const gchar *poker_text1;
+const gchar *poker_text2;
+const gchar *poker_text3;
+const gchar *poker_text4;
+
+const gchar *escaleraReal_text1;
+const gchar *escaleraReal_text2;
+const gchar *escaleraReal_text3;
+const gchar *escaleraReal_text4;
+
 int main(int argc, char *argv[])
 {
+	printf("\n\n\n\n========[Poker Simulacion]========\n\n");
 	int simulations = 0;
     GtkBuilder      *builder; 
     GtkWidget       *window;
@@ -45,18 +66,22 @@ int main(int argc, char *argv[])
 	g_lbl_media =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_media"));
 	g_lbl_varianza  =	GTK_WIDGET(gtk_builder_get_object(builder, "lbl_varianza"));
 	g_lbl_errormedia  =	GTK_WIDGET(gtk_builder_get_object(builder, "lbl_errormedia"));
+
 	g_lbl_dp_vt  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_dp_vt"));
 	g_lbl_dp_m  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_dp_m"));
 	g_lbl_dp_v  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_dp_v"));
 	g_lbl_dp_e  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_dp_e"));
+
 	g_lbl_fh_vt  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_fh_vt"));
 	g_lbl_fh_m  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_fh_m"));
 	g_lbl_fh_v  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_fh_v"));
 	g_lbl_fh_e  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_fh_e"));
+
 	g_lbl_p_vt  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_p_vt"));
 	g_lbl_p_m  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_p_m"));
 	g_lbl_p_v  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_p_v"));
 	g_lbl_p_e  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_p_e"));
+
 	g_lbl_er_vt  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_er_vt"));
 	g_lbl_er_m  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_er_m"));
 	g_lbl_er_v  =		GTK_WIDGET(gtk_builder_get_object(builder, "lbl_er_v"));
@@ -117,6 +142,8 @@ void on_btn_calcular_clicked(GtkButton *b)
 		listProbabilityRealStraight[simulations] = getProbability(*(cantidadJuegos +3) , N_num);
 	}
 
+	/*
+	
 	printf("Lista de probabilidades para Doble Par: [");
 	for(int simulations = 0; simulations < M_num; simulations++){
 		printf (" %f ", *(listProbabilityDoublePar +simulations));
@@ -128,6 +155,8 @@ void on_btn_calcular_clicked(GtkButton *b)
 		printf (" %f ", *(listProbabilityFullHouse +simulations));
 	}
 	printf("]\n");
+
+	printf("%f", (binomialcoef(4,3)*binomialcoef(4,2)*binomialcoef(13,2)));
 
 	printf("Lista de probabilidades para Poker: [");
 	for(int simulations = 0; simulations < M_num; simulations++){
@@ -141,11 +170,73 @@ void on_btn_calcular_clicked(GtkButton *b)
 	}
 	printf("]\n");
 	
-	gtk_label_set_text(GTK_LABEL(g_lbl_dp_vt),ent_M_text);
-	gtk_label_set_text(GTK_LABEL(g_lbl_dp_m),ent_N_text);
+	*/
+	
+	//Esto es para calcular la media de los resltados de probabilidad empirico
+	double doubleParAverage = mediaEmpirica(listProbabilityDoublePar, M_num);
+	double fullHouseAverage = mediaEmpirica(listProbabilityFullHouse, M_num);
+	double pokerAverage = mediaEmpirica(listProbabilityPoker, M_num);
+	double realStraightAverage = mediaEmpirica(listProbabilityRealStraight, M_num);
+	
+	//Aqui se calcula desviación estandar
+	double doubleParStandarDeviation = varianciaEmpirica(listProbabilityDoublePar, M_num, doubleParAverage);
+	double fullHouseStandarDeviation = varianciaEmpirica(listProbabilityFullHouse, M_num, fullHouseAverage);
+	double pokerStandarDeviation = varianciaEmpirica(listProbabilityPoker, M_num, pokerAverage);
+	double realStraightStandarDeviation = varianciaEmpirica(listProbabilityRealStraight, M_num, realStraightAverage);
+	
+	//En esta parte se calcula el valor teorico
+	double doubleParTheoric = ((binomialcoef(13,2)*binomialcoef(4,2)*binomialcoef(4,2)*binomialcoef(11,1)*binomialcoef(4,1))/ (double) ALLCARDS)*100.0;
+	double fullHouseTheoric = ((binomialcoef(13,1)*binomialcoef(12,1)*binomialcoef(4,3)*binomialcoef(4,2))/ (double) ALLCARDS)*100.0;
+	double pokerTheoric = ((binomialcoef(13,1)* binomialcoef(4,4)*binomialcoef(12,1)*binomialcoef(4,1))/ (double) ALLCARDS)*100.0;
+	double realStraightTheoric = ((binomialcoef(4,1))/ (double) ALLCARDS)*100.0;
+	
+	//Aqui se calcula el valor del error entre el valor teorico y el empirico
+	double doubleParError = calculateError(doubleParTheoric, doubleParAverage);
+	double fullHouseError = calculateError(fullHouseTheoric, fullHouseAverage);
+	double pokerError = calculateError(pokerTheoric, pokerAverage);
+	double realStraightError = calculateError(realStraightTheoric, realStraightAverage);
+	
+	doblePar_text1 = g_strdup_printf("%6.5f", doubleParTheoric);
+	doblePar_text2 = g_strdup_printf("%6.5f", doubleParAverage);
+	doblePar_text3 = g_strdup_printf("%6.5f", doubleParStandarDeviation);
+	doblePar_text4 = g_strdup_printf("%6.5f", doubleParError);
+
+	fullHouse_text1 = g_strdup_printf("%6.5f", fullHouseTheoric);
+	fullHouse_text2 = g_strdup_printf("%6.5f", fullHouseAverage);
+	fullHouse_text3 = g_strdup_printf("%6.6f", fullHouseStandarDeviation);
+	fullHouse_text4 = g_strdup_printf("%6.5f", fullHouseError);
+
+	poker_text1 = g_strdup_printf("%6.5f", pokerTheoric);
+	poker_text2 = g_strdup_printf("%6.5f", pokerAverage);
+	poker_text3 = g_strdup_printf("%6.7f", pokerStandarDeviation);
+	poker_text4 = g_strdup_printf("%6.5f", pokerError);
+
+	escaleraReal_text1 = g_strdup_printf("%6.5f", realStraightTheoric);
+	escaleraReal_text2 = g_strdup_printf("%6.5f", realStraightAverage);
+	escaleraReal_text3 = g_strdup_printf("%6.7f", realStraightStandarDeviation);
+	escaleraReal_text4 = g_strdup_printf("%6.5f", realStraightError);
+
+	gtk_label_set_text(GTK_LABEL(g_lbl_dp_vt),doblePar_text1);
+	gtk_label_set_text(GTK_LABEL(g_lbl_dp_m),doblePar_text2);
+	gtk_label_set_text(GTK_LABEL(g_lbl_dp_v),doblePar_text3);
+	gtk_label_set_text(GTK_LABEL(g_lbl_dp_e),doblePar_text4);
+
+	gtk_label_set_text(GTK_LABEL(g_lbl_fh_vt),fullHouse_text1);
+	gtk_label_set_text(GTK_LABEL(g_lbl_fh_m),fullHouse_text2);
+	gtk_label_set_text(GTK_LABEL(g_lbl_fh_v),fullHouse_text3);
+	gtk_label_set_text(GTK_LABEL(g_lbl_fh_e),fullHouse_text4);
+
+	gtk_label_set_text(GTK_LABEL(g_lbl_p_vt),poker_text1);
+	gtk_label_set_text(GTK_LABEL(g_lbl_p_m),poker_text2);
+	gtk_label_set_text(GTK_LABEL(g_lbl_p_v),poker_text3);
+	gtk_label_set_text(GTK_LABEL(g_lbl_p_e),poker_text4);
+
+	gtk_label_set_text(GTK_LABEL(g_lbl_er_vt),escaleraReal_text1);
+	gtk_label_set_text(GTK_LABEL(g_lbl_er_m),escaleraReal_text2);
+	gtk_label_set_text(GTK_LABEL(g_lbl_er_v),escaleraReal_text3);
+	gtk_label_set_text(GTK_LABEL(g_lbl_er_e),escaleraReal_text4);
 	
 }
-
 
 // called when window is closed
 void on_window_main_destroy()

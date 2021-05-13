@@ -18,9 +18,9 @@ GTKLIB=`pkg-config --cflags --libs gtk+-3.0`
 
 # linker
 LD=gcc
-LDFLAGS=$(PTHREAD) $(GTKLIB) -export-dynamic
+LDFLAGS=$(PTHREAD) $(GTKLIB)
 
-OBJS=    main.o card.o deck.o hand.o player.o probability.o pokergame.o pokergame.h
+OBJS=    main.o card.o deck.o hand.o player.o probability.o pokergame.o
 
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)

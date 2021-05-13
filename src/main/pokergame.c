@@ -13,7 +13,6 @@ int iDoblePar = 0, iFullHouse = 0, iPoker = 0, iEscaleraReal = 0;
   player_init(player);
 
   srand(time(NULL));
-  printf("\n\n\n\n========[Poker Simulacion]========\n\n");
   
   deck_init(playingDeck);
   deck_fill(playingDeck);
@@ -26,10 +25,10 @@ int iDoblePar = 0, iFullHouse = 0, iPoker = 0, iEscaleraReal = 0;
 	    add_card(player->hand,*tmpCard);
 	  }
 
-    printf("Mano actual:\n");
-	  hand_toString_ordered(player->hand);
+    // printf("Mano actual:\n");
+	  // hand_toString_ordered(player->hand);
     hand_value(player->hand);
-	  printf("\n%s\n", player->hand->class);
+	  // printf("\n%s\n", player->hand->class);
 
     if(strcmp( player->hand->class, "Full House") == 0) iFullHouse++ ;
     if(strcmp( player->hand->class, "Poker") == 0) iPoker++;
@@ -43,9 +42,6 @@ int iDoblePar = 0, iFullHouse = 0, iPoker = 0, iEscaleraReal = 0;
     enqueue_deck(playingDeck);
     shuffle(playingDeck,1500);
     player_reset_hand(player);
-
-    printf("\nNueva mano\n");
-    //sleep(1);
     setloop++; //Esta variable es la que va a funcionar para determinar la cantidad de repeticiones de la simulación
   }// end while
 

@@ -10,6 +10,7 @@
 #define FIRSTCARD 0       
 #define CLASS 8           
 #define RANKS 13
+#define ALLCARDS 2598960
 
 //Definir las probabilidades teoricas
 
@@ -67,6 +68,8 @@ void player_destroy(Player * aPlayer);
 double mediaEmpirica(double probabilidades[], int size);
 double varianciaEmpirica(double probabilidades[], int size, double media);
 double getProbability(int qty, int tries);
+double binomialcoef(int x, int y);
+double calculateError(double theoric, double empiric);
 
 // Prototipo para: Pokergame
 int * game(int N);
