@@ -15,6 +15,8 @@ int * cantidadJuegos;
 const gchar *ent_M_text;
 const gchar *ent_N_text;
 
+const gchar *porcentaje;
+
 const gchar *doblePar_text1;
 const gchar *doblePar_text2;
 const gchar *doblePar_text3;
@@ -95,7 +97,7 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
+/*
 char *repeatStr (char *str, size_t count) {
     if (count == 0) return NULL;
     char *ret = malloc (strlen (str) * count + count);
@@ -116,11 +118,12 @@ static void *cargandopts(void *arg)
 		sleep(1);
 	}
 }
+*/
 
 void on_btn_calcular_clicked(GtkButton *b)
 {
-	pthread_t t_cargandopts;
-	pthread_create(&t_cargandopts, NULL,cargandopts,NULL);
+	//pthread_t t_cargandopts;
+	//pthread_create(&t_cargandopts, NULL,cargandopts,NULL);
 
 	//Obtener valores del usuario
 	ent_M_text = gtk_entry_get_text (GTK_ENTRY (g_ent_M));
@@ -134,7 +137,13 @@ void on_btn_calcular_clicked(GtkButton *b)
 	static double listProbabilityRealStraight[500000];
 
 	//Aqui se hace la simulacion
+	
 	for(int simulations = 0; simulations < M_num; simulations++){
+
+		porcentaje = g_strdup_printf(" %d", (100 * simulations/(N_num)));
+
+		gtk_label_set_text(GTK_LABEL(g_lbl_cargandopts),porcentaje);
+
 		cantidadJuegos = game(N_num);
 		listProbabilityDoublePar[simulations] = getProbability(*(cantidadJuegos +0) , N_num);
 		listProbabilityFullHouse[simulations] = getProbability(*(cantidadJuegos +1) , N_num);

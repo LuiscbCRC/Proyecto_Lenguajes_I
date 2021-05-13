@@ -1,5 +1,7 @@
 #include"pokergame.h"
 
+#define NSHUFLE 2000
+
 int * game(int N){
 static int cantidadJuegos[4];
 int iDoblePar = 0, iFullHouse = 0, iPoker = 0, iEscaleraReal = 0;
@@ -16,7 +18,7 @@ int iDoblePar = 0, iFullHouse = 0, iPoker = 0, iEscaleraReal = 0;
   
   deck_init(playingDeck);
   deck_fill(playingDeck);
-  shuffle(playingDeck,2000);
+  shuffle(playingDeck, NSHUFLE);
 
   while(setloop != N){
 
